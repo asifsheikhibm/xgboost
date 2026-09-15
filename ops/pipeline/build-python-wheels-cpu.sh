@@ -11,7 +11,7 @@ fi
 
 if [[ "$#" -lt 2 ]]
 then
-  echo "Usage: $0 manylinux_2_28 {x86_64,aarch64}"
+  echo "Usage: $0 manylinux_2_28 {x86_64,aarch64,ppc64le}"
   exit 1
 fi
 
@@ -25,6 +25,9 @@ source ops/pipeline/get-image-tag.sh
 WHEEL_TAG="${manylinux_target}_${arch}"
 IMAGE_REPO="xgb-ci.${WHEEL_TAG}"
 IMAGE_URI="${DOCKER_REGISTRY_URL}/${IMAGE_REPO}:${IMAGE_TAG}"
+if [[ "$ARCH" == 'ppc64le' ]]; then
+  IMAGE_URI="docker.io/sandeepkgupta12/xgb-manylinux_2_28_ppc64le:latest"
+fi
 PYTHON_BIN="/opt/python/cp312-cp312/bin/python"
 
 echo "--- Build binary wheel for ${WHEEL_TAG} (CPU only)"
