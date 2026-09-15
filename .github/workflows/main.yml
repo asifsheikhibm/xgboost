@@ -289,11 +289,12 @@ jobs:
     runs-on: ${{ matrix.runner }}
     container:
       image: docker.io/sandeepkgupta12/xgb-manylinux_2_28_ppc64le:local
-    matrix:
-      include:
-        - manylinux_target: manylinux_2_28
-          arch: ppc64le
-          runner: self-hosted
+    strategy:
+      matrix:
+        include:
+          - manylinux_target: manylinux_2_28
+            arch: ppc64le
+            runner: self-hosted
     steps:
       - uses: actions/checkout@v7.0.1
         with:
