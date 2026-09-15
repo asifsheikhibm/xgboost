@@ -26,7 +26,7 @@ WHEEL_TAG="${manylinux_target}_${arch}"
 IMAGE_REPO="xgb-ci.${WHEEL_TAG}"
 IMAGE_URI="${DOCKER_REGISTRY_URL}/${IMAGE_REPO}:${IMAGE_TAG}"
 if [[ "$arch" == 'ppc64le' ]]; then
-  IMAGE_URI="docker.io/sandeepkgupta12/xgb-manylinux_2_28_ppc64le:latest"
+  IMAGE_URI="docker.io/sandeepkgupta12/xgb-ci.manylinux_2_34_ppc64le:main"
 fi
 PYTHON_BIN="/opt/python/cp312-cp312/bin/python"
 
