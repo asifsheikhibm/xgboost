@@ -1,11 +1,12 @@
 #!/bin/bash
-# Build Python wheels, CPU variant for ppc64le (no Docker)
-# Runs directly on the ppc64le runner; requires the runner to be a
-# manylinux_2_28-compatible environment so auditwheel can verify the ABI.
+# Build Python wheels, CPU variant for ppc64le
+# Uses the manylinux_2_28_ppc64le container for ABI-compatible compilation.
 
 set -euo pipefail
 
-WHEEL_TAG="manylinux_2_38_ppc64le"
+WHEEL_TAG="manylinux_2_28_ppc64le"
+IMAGE_URI="quay.io/pypa/manylinux_2_28_ppc64le"
+PYTHON_BIN="/opt/python/cp312-cp312/bin/python"
 
 source ops/pipeline/classify-git-branch.sh
 
@@ -15,18 +16,19 @@ set -x
 # Patch pyproject.toml to rename package to xgboost-cpu
 python3 ops/script/pypi_variants.py --use-suffix=cpu --require-nccl-dep=na
 
-# Build the wheel directly on the host Python
-cd python-package
-python3 -m pip wheel --no-deps -v . --wheel-dir dist/
-cd ..
+# Build inside the manylinux_2_28 container (old toolchain = glibc-2.28-compatible symbols)
+python3 ops/docker_run.py \
+  --image-uri "${IMAGE_URI}" \
+  -- bash -c \
+  "cd python-package && ${PYTHON_BIN} -m pip wheel --no-deps -v . --wheel-dir dist/"
 
-# Audit and repair the wheel for manylinux_2_28_ppc64le compliance
-auditwheel repair --only-plat \
-  --plat ${WHEEL_TAG} \
-  python-package/dist/xgboost_cpu-*.whl \
-  --wheel-dir wheelhouse/
+# Audit and repair inside the same container
+python3 ops/docker_run.py \
+  --image-uri "${IMAGE_URI}" \
+  -- auditwheel repair --only-plat \
+  --plat ${WHEEL_TAG} python-package/dist/xgboost_cpu-*.whl
 
-# Retag to py3-none (language/ABI-neutral) for broad Python version compatibility
+# Retag to py3-none for broad Python version compatibility
 python3 -m wheel tags --python-tag py3 --abi-tag none --platform ${WHEEL_TAG} --remove \
   wheelhouse/xgboost_cpu-*.whl
 
