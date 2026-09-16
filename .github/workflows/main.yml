@@ -299,8 +299,7 @@ jobs:
           submodules: "true"
       - name: Build xgboost cpu wheel for ppc64le
         run: |
-          bash ops/pipeline/build-python-wheels-cpu.sh \
-          ${{ matrix.manylinux_target }} ${{ matrix.arch }}
+          bash ops/pipeline/build-python-wheel-ppc64le.sh
 
   build-gpu-rpkg:
     name: Build GPU-enabled R package
