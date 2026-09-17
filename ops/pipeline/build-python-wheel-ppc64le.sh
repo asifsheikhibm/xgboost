@@ -5,7 +5,7 @@
 set -euo pipefail
 
 WHEEL_TAG="manylinux_2_28_ppc64le"
-IMAGE_URI="quay.io/pypa/manylinux_2_28_ppc64le"
+IMAGE_URI="icr.io/rhoai-cicd/xgb-manylinux_2_28_ppc64le:latest"
 PYTHON_BIN="/opt/python/cp312-cp312/bin/python"
 
 source ops/pipeline/classify-git-branch.sh
