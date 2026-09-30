@@ -1,4 +1,3 @@
-## comment
 #!/bin/bash
 set -euo pipefail
 
