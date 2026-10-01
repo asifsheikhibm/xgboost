@@ -15,6 +15,6 @@ sudo apt update && sudo apt install jq
 mkdir yq
 pushd yq/
 wget -nv https://github.com/mikefarah/yq/releases/download/v4.44.3/yq_linux_ppc64le.tar.gz -O - | \
-    tar xz && mv ./yq_linux_ppc64le /usr/bin/yq
+    tar xz && sudo mv ./yq_linux_ppc64le /usr/bin/yq
 popd
 rm -rf yq/
