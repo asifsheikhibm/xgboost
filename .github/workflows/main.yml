@@ -308,7 +308,13 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
       - name: Build xgboost cpu wheel for ppc64le
         run: |
-          bash ops/pipeline/build-python-wheel-ppc64le.sh 
+          bash ops/pipeline/build-python-wheel-ppc64le.sh
+      - name: Upload wheel artifact
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: python-wheel-${{ matrix.arch }}
+          path: wheelhouse/*.whl
+          retention-days: 1  
 
   build-gpu-rpkg:
     name: Build GPU-enabled R package
