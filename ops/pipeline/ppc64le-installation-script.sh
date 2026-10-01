@@ -2,8 +2,8 @@
 set -euo pipefail
 
 ## Basic tools (from install_drivers.sh)
-apt-get update
-apt-get install -y cmake git build-essential wget ca-certificates curl unzip python3 python3-pip python3-venv
+sudo apt-get update
+sudo apt-get install -y cmake git build-essential wget ca-certificates curl unzip python3 python3-pip python3-venv
 
 pip3 install --break-system-packages 'pip>=23' 'wheel>=0.42' pydistcheck
 
@@ -11,7 +11,7 @@ pip3 install --break-system-packages 'pip>=23' 'wheel>=0.42' pydistcheck
 pip3 install awscli
 
 ## Install jq and yq
-apt update && apt install jq
+sudo apt update && apt install jq
 mkdir yq
 pushd yq/
 wget -nv https://github.com/mikefarah/yq/releases/download/v4.44.3/yq_linux_ppc64le.tar.gz -O - | \
