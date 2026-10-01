@@ -11,7 +11,7 @@ pip3 install --break-system-packages 'pip>=23' 'wheel>=0.42' pydistcheck
 pip3 install awscli
 
 ## Install jq and yq
-sudo apt update && apt install jq
+sudo apt update && sudo apt install jq
 mkdir yq
 pushd yq/
 wget -nv https://github.com/mikefarah/yq/releases/download/v4.44.3/yq_linux_ppc64le.tar.gz -O - | \
