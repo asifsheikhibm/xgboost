@@ -313,8 +313,8 @@ jobs:
         uses: actions/upload-artifact@v7.0.1
         with:
           name: python-wheel-${{ matrix.arch }}
-          path: wheelhouse/*.whl
-          retention-days: 1  
+          path: python-package/dist/*.whl
+          retention-days: 1
 
   build-gpu-rpkg:
     name: Build GPU-enabled R package
