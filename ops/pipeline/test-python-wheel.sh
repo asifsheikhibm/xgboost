@@ -38,10 +38,10 @@ fi
 
 # Validate parameter values
 case "${suite}" in
-  gpu|mgpu|gpu-arm64|cpu|cpu-arm64)
+  gpu|mgpu|gpu-arm64|cpu|cpu-arm64|cpu-ppc64le)
     ;;
   *)
-    echo "Error: --suite must be one of: gpu, mgpu, gpu-arm64, cpu, cpu-arm64. Got '${suite}'"
+    echo "Error: --suite must be one of: gpu, mgpu, gpu-arm64, cpu, cpu-arm64, cpu-ppc64le. Got '${suite}'"
     exit 1
     ;;
 esac
@@ -74,7 +74,7 @@ case "$suite" in
   gpu|mgpu|gpu-arm64)
     source activate gpu_test
     ;;
-  cpu|cpu-arm64)
+  cpu|cpu-arm64|cpu-ppc64le)
     source activate linux_cpu_test
     ;;
 esac
@@ -122,6 +122,13 @@ case "$suite" in
     ;;
   cpu)
     echo "-- Run Python tests (CPU)"
+    export RAY_OBJECT_STORE_ALLOW_SLOW_STORAGE=1
+    pytest -v -s -rxXs --durations=0 tests/python
+    pytest -v -s -rxXs --durations=0 tests/test_distributed/test_with_dask
+    pytest -v -s -rxXs --durations=0 tests/test_distributed/test_with_spark
+    ;;
+  cpu-ppc64le)
+    echo "-- Run ppc64le Python tests (CPU)"
     export RAY_OBJECT_STORE_ALLOW_SLOW_STORAGE=1
     pytest -v -s -rxXs --durations=0 tests/python
     pytest -v -s -rxXs --durations=0 tests/test_distributed/test_with_dask

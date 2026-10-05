@@ -315,6 +315,21 @@ jobs:
           name: python-wheel-${{ matrix.arch }}
           path: python-package/dist/*.whl
           retention-days: 1
+    
+    test-python-ppc64le-wheel:
+      name: Python tests CPU (ppc64le)
+      needs: build-ppc64le-python-wheels-cpu
+      runs-on: self-hosted
+      steps:
+        - uses: actions/checkout@v7.0.1
+        - name: Download wheel artifact
+          uses: actions/download-artifact@v8.0.1
+          with:
+            name: python-wheel-ppc64le
+            path: wheelhouse
+        - name: Run python tests
+          run: bash ops/pipeline/test-python-wheel.sh --suite cpu-ppc64le
+
 
   build-gpu-rpkg:
     name: Build GPU-enabled R package
@@ -576,6 +591,7 @@ jobs:
             *.whl
       - name: Run Python tests (${{ matrix.description }})
         run: bash ops/pipeline/test-python-wheel.sh --suite ${{ matrix.suite }}
+  
 
   python-wheels-macos:
     name: Build macOS wheel (${{ matrix.platform_id }})
