@@ -322,7 +322,6 @@ jobs:
       runs-on: self-hosted
       container:
         image: icr.io/rhoai-cicd/xgb-ci.manylinux_2_28_ppc64le:latest
-        registry: icr.io
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
       steps:
