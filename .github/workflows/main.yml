@@ -316,7 +316,7 @@ jobs:
           path: python-package/dist/*.whl
           retention-days: 1
     
-    test-python-ppc64le-wheel:
+  test-python-ppc64le-wheel:
       name: Python tests CPU (ppc64le)
       needs: build-ppc64le-python-wheels-cpu
       runs-on: self-hosted
