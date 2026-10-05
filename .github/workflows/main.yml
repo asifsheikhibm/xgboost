@@ -322,8 +322,9 @@ jobs:
       runs-on: self-hosted
       container:
         image: icr.io/rhoai-cicd/xgb-ci.manylinux_2_28_ppc64le:latest
-        username: ${{ secrets.REGISTRY_USERNAME }}
-        password: ${{ secrets.REGISTRY_PASSWORD }}
+        credentials:
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
       steps:
         - uses: actions/checkout@v7.0.1
         - name: Download wheel artifact
