@@ -294,6 +294,11 @@ jobs:
             arch: ppc64le
             runner: self-hosted
     steps:
+      - name: Clean workspace (handle root-owned files from container)
+        run: sudo rm -rf "$GITHUB_WORKSPACE"
+      - uses: actions/checkout@v7.0.1
+        with:
+          submodules: "true"
       - uses: actions/checkout@v7.0.1
         with:
           submodules: "true"
