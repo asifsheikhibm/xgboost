@@ -294,8 +294,6 @@ jobs:
             arch: ppc64le
             runner: self-hosted
     steps:
-      - name: Clean workspace (handle root-owned files from container)
-        run: sudo rm -rf "$GITHUB_WORKSPACE"
       - uses: actions/checkout@v7.0.1
         with:
           submodules: "true"
@@ -332,10 +330,19 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
       steps:
         - uses: actions/checkout@v7.0.1
-        - uses: dmlc/xgboost-devops/actions/miniforge-setup@main
           with:
-            environment-name: ppc64le_python_test
-            environment-file: ops/conda_env/linux_sycl_test.yml
+            repository: dmlc/xgboost-devops
+            path: xgboost-devops
+        - name: Setup Conda (ppc64le)
+          shell: bash
+          run: |
+            curl -fsSL https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-ppc64le.sh \
+            -o /tmp/miniforge.sh
+            bash /tmp/miniforge.sh -b -p /opt/conda
+            /opt/conda/bin/conda env create -n linux_cpu_test \
+              -f xgboost-devops/containers/conda_env/linux_cpu_test.yml
+            echo "/opt/conda/bin" >> $GITHUB_PATH
+            echo "CONDA=/opt/conda" >> $GITHUB_ENV
         - name: Download wheel artifact
           uses: actions/download-artifact@v8.0.1
           with:
