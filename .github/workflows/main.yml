@@ -320,6 +320,11 @@ jobs:
       name: Python tests CPU (ppc64le)
       needs: build-ppc64le-python-wheels-cpu
       runs-on: self-hosted
+      container:
+        image: icr.io/rhoai-cicd/xgb-ci.manylinux_2_28_ppc64le:latest
+        registry: icr.io
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
       steps:
         - uses: actions/checkout@v7.0.1
         - name: Download wheel artifact
