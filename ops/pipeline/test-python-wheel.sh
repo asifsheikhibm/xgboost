@@ -139,7 +139,7 @@ case "$suite" in
     # tests/python
     # pytest -v -s -rxXs --durations=0 tests/test_distributed/test_with_dask
     # pytest -v -s -rxXs --durations=0 tests/test_distributed/test_with_spark
-    # ;;
+    ;;
   cpu-arm64)
     echo "-- Run Python tests (CPU, ARM64)"
     pytest -v -s -rxXs --durations=0 \
