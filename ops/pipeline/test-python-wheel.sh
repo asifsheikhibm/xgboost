@@ -131,7 +131,7 @@ case "$suite" in
     echo "-- Run ppc64le Python tests (CPU)"
     export RAY_OBJECT_STORE_ALLOW_SLOW_STORAGE=1
     pytest -v -s -rxXs --durations=0 \
-    --deselect tests/python/test_tree_regularization.py::TestTreeRegularization::test_quantile_error_lambda \
+    #--deselect tests/python/test_tree_regularization.py::TestTreeRegularization::test_quantile_error_lambda \
     tests/python
     pytest -v -s -rxXs --durations=0 tests/test_distributed/test_with_dask
     pytest -v -s -rxXs --durations=0 tests/test_distributed/test_with_spark
