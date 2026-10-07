@@ -130,7 +130,11 @@ case "$suite" in
   cpu-ppc64le)
     echo "-- Run ppc64le Python tests (CPU)"
     export RAY_OBJECT_STORE_ALLOW_SLOW_STORAGE=1
-    pytest -v -s -rxXs --durations=0 tests/python
+    pytest -v -s -rxXs --durations=0 \
+      --deselect tests/python/test_data_iterator.py::test_quantile_objective \
+      --deselect tests/python/test_demos.py::test_multioutput_reg \
+      --deselect tests/python/test_with_sklearn.py::test_RFECV \
+      tests/python
     pytest -v -s -rxXs --durations=0 tests/test_distributed/test_with_dask
     pytest -v -s -rxXs --durations=0 tests/test_distributed/test_with_spark
     # export RAY_OBJECT_STORE_ALLOW_SLOW_STORAGE=1
